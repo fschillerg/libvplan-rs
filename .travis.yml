@@ -1,0 +1,34 @@
+language: rust
+
+rust:
+  - stable
+  - beta
+  - nightly
+
+jobs:
+  include:
+    - stage: lint
+      rust: nightly
+      install:
+        - rustup component add clippy || cargo install --git https://github.com/rust-lang/rust-clippy --force clippy
+        - rustup component add rustfmt || cargo install --git https://github.com/rust-lang/rustfmt --force --bin rustfmt
+      script:
+        - cargo clippy -- --deny clippy::all
+        - cargo fmt -- --check
+
+    - stage: deploy docs
+      branches:
+        only:
+          - master
+      rust: stable
+      script:
+        - cargo doc --no-deps --release
+      deploy:
+        provider: pages
+        local-dir: target/doc
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN
+        name: flyingB0tat0
+        email: bot@baudisch.xyz
+        keep-history: false
+        allow-empty-commit: true
