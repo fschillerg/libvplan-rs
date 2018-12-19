@@ -5,10 +5,13 @@ rust:
   - beta
   - nightly
 
+cache: cargo
+
 jobs:
   include:
     - stage: lint
       rust: nightly
+      cache: cargo
       install:
         - rustup component add clippy || cargo install --git https://github.com/rust-lang/rust-clippy --force clippy
         - rustup component add rustfmt || cargo install --git https://github.com/rust-lang/rustfmt --force --bin rustfmt
@@ -21,6 +24,7 @@ jobs:
         only:
           - master
       rust: stable
+      cache: cargo
       script:
         - cargo doc --no-deps --release
       deploy:
