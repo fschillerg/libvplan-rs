@@ -2,7 +2,7 @@ language: rust
 
 branches:
   except:
-  - /^dependabot\/.*/
+    - /^dependabot\/.*/
 
 rust:
   - stable
