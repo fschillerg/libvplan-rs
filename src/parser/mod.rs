@@ -61,28 +61,28 @@ pub fn parse(input: &str) -> Result<vplan::Vplan, ParsingError> {
                     changes.push(vplan::Change {
                         form: match change.form.value {
                             Some(value) => value,
-                            None => "".to_owned()
+                            None => "".to_owned(),
                         },
                         lesson: match change.lesson.value {
                             Some(value) => value,
-                            None => "".to_owned()
+                            None => "".to_owned(),
                         },
                         subject: match change.subject.value {
                             Some(value) => value,
-                            None => "".to_owned()
+                            None => "".to_owned(),
                         },
                         teacher: match change.teacher.value {
                             Some(value) => value,
-                            None => "".to_owned()
+                            None => "".to_owned(),
                         },
                         room: match change.room.value {
                             Some(value) => value,
-                            None => "".to_owned()
+                            None => "".to_owned(),
                         },
                         info: match change.info.value {
                             Some(value) => value,
-                            None => "".to_owned()
-                        }
+                            None => "".to_owned(),
+                        },
                     });
                 }
             }
@@ -93,7 +93,7 @@ pub fn parse(input: &str) -> Result<vplan::Vplan, ParsingError> {
                 for item in document.footer.unwrap().items {
                     match item.inner.value {
                         Some(value) => info.push(value),
-                        None => info.push("".to_owned())
+                        None => info.push("".to_owned()),
                     }
                 }
             }
@@ -125,9 +125,9 @@ pub fn parse(input: &str) -> Result<vplan::Vplan, ParsingError> {
                 changed,
                 days_off,
                 changes,
-                info
+                info,
             })
-        },
-        Err(error) => Err(ParsingError::DocumentParsingError(error))
+        }
+        Err(error) => Err(ParsingError::DocumentParsingError(error)),
     }
 }

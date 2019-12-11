@@ -25,7 +25,7 @@ struct Cli {
     password: String,
     /// Weekday to fetch vplan for
     #[structopt(name = "weekday", parse(from_str))]
-    weekday: String
+    weekday: String,
 }
 
 fn main() {
@@ -39,20 +39,20 @@ fn main() {
         "wednesday" => Weekday::Wed,
         "thursday" => Weekday::Thu,
         "friday" => Weekday::Fri,
-        _ => errorexit!("invalid weekday")
+        _ => errorexit!("invalid weekday"),
     };
 
     let client = Client::with_credentials(
         "https://fssgym.de/vplan",
         cli.username.as_ref(),
-        cli.password.as_ref()
+        cli.password.as_ref(),
     );
 
     let future = client.get(weekday);
 
     let mut rt = match Runtime::new() {
         Ok(rt) => rt,
-        Err(error) => errorexit!("{}", error)
+        Err(error) => errorexit!("{}", error),
     };
 
     match rt.block_on(future) {
@@ -61,7 +61,7 @@ fn main() {
 
             let week_type = match vplan.date.week_type {
                 WeekType::A => "A",
-                WeekType::B => "B"
+                WeekType::B => "B",
             };
 
             println!(
@@ -87,7 +87,7 @@ fn main() {
             for info in vplan.info {
                 println!("{}", info);
             }
-        },
-        Err(error) => errorexit!("{}", error)
+        }
+        Err(error) => errorexit!("{}", error),
     }
 }

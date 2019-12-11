@@ -13,7 +13,7 @@ pub struct Vplan {
     /// Changes to the timetable
     pub changes: Vec<Change>,
     /// Additional info
-    pub info: Vec<String>
+    pub info: Vec<String>,
 }
 
 #[derive(Clone, Eq, PartialEq, Serialize, Deserialize, Debug)]
@@ -30,7 +30,7 @@ pub struct Change {
     /// (new) Room
     pub room: String,
     /// Additional info
-    pub info: String
+    pub info: String,
 }
 
 #[derive(Clone, Eq, PartialEq, Serialize, Deserialize, Debug)]
@@ -38,12 +38,12 @@ pub struct Change {
 pub struct VplanDate {
     pub date: DateTime<Utc>,
     /// Week type
-    pub week_type: WeekType
+    pub week_type: WeekType,
 }
 
 #[derive(Clone, Eq, PartialEq, Serialize, Deserialize, Debug)]
 /// A type specific to vplan
 pub enum WeekType {
     A,
-    B
+    B,
 }

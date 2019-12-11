@@ -3,7 +3,7 @@ use serde_derive::*;
 #[derive(Deserialize)]
 pub struct Value {
     #[serde(rename = "$value")]
-    pub value: Option<String>
+    pub value: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -15,7 +15,7 @@ pub struct Vplan {
     #[serde(rename = "haupt")]
     pub main: Option<Main>,
     #[serde(rename = "fuss")]
-    pub footer: Option<Footer>
+    pub footer: Option<Footer>,
 }
 
 #[derive(Deserialize)]
@@ -29,7 +29,7 @@ pub struct Header {
     #[serde(rename = "datum")]
     pub date: Value,
     #[serde(rename = "kopfinfo")]
-    pub info: HeaderInfo
+    pub info: HeaderInfo,
 }
 
 #[derive(Deserialize)]
@@ -39,25 +39,25 @@ pub struct HeaderInfo {
     #[serde(rename = "abwesendr")]
     pub narooms: Option<Value>,
     #[serde(rename = "aenderungk")]
-    pub changed: Option<Value>
+    pub changed: Option<Value>,
 }
 
 #[derive(Deserialize)]
 pub struct DaysOff {
     #[serde(rename = "ft")]
-    pub items: Vec<DayOff>
+    pub items: Vec<DayOff>,
 }
 
 #[derive(Deserialize)]
 pub struct DayOff {
     #[serde(rename = "$value")]
-    pub value: String
+    pub value: String,
 }
 
 #[derive(Deserialize)]
 pub struct Main {
     #[serde(rename = "aktion")]
-    pub items: Vec<Action>
+    pub items: Vec<Action>,
 }
 
 #[derive(Deserialize)]
@@ -72,7 +72,7 @@ pub struct Action {
     pub teacher: ActionInner,
     #[serde(rename = "raum")]
     pub room: ActionInner,
-    pub info: ActionInner
+    pub info: ActionInner,
 }
 
 #[derive(Deserialize)]
@@ -82,17 +82,17 @@ pub struct ActionInner {
     legeaendert: Option<String>,
     rageaendert: Option<String>,
     #[serde(rename = "$value")]
-    pub value: Option<String>
+    pub value: Option<String>,
 }
 
 #[derive(Deserialize)]
 pub struct Footer {
     #[serde(rename = "fusszeile")]
-    pub items: Vec<FooterLine>
+    pub items: Vec<FooterLine>,
 }
 
 #[derive(Deserialize)]
 pub struct FooterLine {
     #[serde(rename = "fussinfo")]
-    pub inner: Value
+    pub inner: Value,
 }

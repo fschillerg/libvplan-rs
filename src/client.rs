@@ -38,12 +38,12 @@ use std::boxed::Box;
 pub struct Client {
     client: hyper::Client<hyper_tls::HttpsConnector<hyper::client::HttpConnector>>,
     url: String,
-    authorization: Option<String>
+    authorization: Option<String>,
 }
 
 /// A `Future` that will resolve to a vplan or an error during fetching it.
 pub struct ResponseFuture {
-    inner: Box<Future<Item = vplan::Vplan, Error = RequestError> + Send>
+    inner: Box<Future<Item = vplan::Vplan, Error = RequestError> + Send>,
 }
 
 impl ResponseFuture {
@@ -69,7 +69,7 @@ impl Client {
         Self {
             client: hyper::Client::builder().keep_alive(false).build(connector),
             url: url.to_owned(),
-            authorization: None
+            authorization: None,
         }
     }
 
@@ -80,7 +80,7 @@ impl Client {
         Self {
             client: hyper::Client::builder().keep_alive(true).build(connector),
             url: url.to_owned(),
-            authorization: Some(authorization.to_owned())
+            authorization: Some(authorization.to_owned()),
         }
     }
 
@@ -92,7 +92,7 @@ impl Client {
                 "Basic {}",
                 base64::encode(format!("{}:{}", username, password).as_bytes())
             )
-            .as_str()
+            .as_str(),
         )
     }
 
@@ -104,7 +104,7 @@ impl Client {
             Weekday::Wed => Some("Mi"),
             Weekday::Thu => Some("Do"),
             Weekday::Fri => Some("Fr"),
-            _ => None
+            _ => None,
         };
 
         if day.is_none() {
@@ -117,7 +117,9 @@ impl Client {
         let uri = url.parse::<hyper::Uri>();
 
         if let Err(error) = uri {
-            return ResponseFuture::new(Box::new(future::err(RequestError::URLParsingError(error))));
+            return ResponseFuture::new(Box::new(future::err(RequestError::URLParsingError(
+                error,
+            ))));
         }
 
         let uri = uri.unwrap();
@@ -131,7 +133,7 @@ impl Client {
             None => hyper::Request::builder()
                 .method(http::Method::GET)
                 .uri(uri)
-                .body(hyper::Body::empty())
+                .body(hyper::Body::empty()),
         };
 
         if let Err(error) = request {
@@ -159,9 +161,9 @@ impl Client {
 
                     match parser::parse(body.as_ref()) {
                         Ok(vplan) => Ok(vplan),
-                        Err(error) => Err(RequestError::XMLParsingError(error))
+                        Err(error) => Err(RequestError::XMLParsingError(error)),
                     }
-                })
+                }),
         ))
     }
 }

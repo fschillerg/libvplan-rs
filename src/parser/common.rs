@@ -39,21 +39,21 @@ pub fn to_date(
     day: u32,
     hour: Option<u32>,
     minute: Option<u32>,
-    second: Option<u32>
+    second: Option<u32>,
 ) -> DateTime<Utc> {
     let hour = match hour {
         Some(hour) => hour,
-        None => 0
+        None => 0,
     };
 
     let minute = match minute {
         Some(minute) => minute,
-        None => 0
+        None => 0,
     };
 
     let second = match second {
         Some(second) => second,
-        None => 0
+        None => 0,
     };
 
     let date = Berlin.ymd(year, month, day).and_hms(hour, minute, second);
@@ -74,7 +74,7 @@ pub fn to_month(input: &str) -> Result<u32, ParsingError> {
         "Oktober" => Ok(10),
         "November" => Ok(11),
         "Dezember" => Ok(12),
-        _ => Err(ParsingError::DateParsingError("invalid month".to_owned()))
+        _ => Err(ParsingError::DateParsingError("invalid month".to_owned())),
     }
 }
 
@@ -83,7 +83,7 @@ pub fn to_week_type(input: &str) -> Result<WeekType, ParsingError> {
         "(A-Woche)" => Ok(WeekType::A),
         "(B-Woche)" => Ok(WeekType::B),
         _ => Err(ParsingError::DateParsingError(
-            "invalid type of week".to_owned()
-        ))
+            "invalid type of week".to_owned(),
+        )),
     }
 }
