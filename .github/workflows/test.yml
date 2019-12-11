@@ -1,0 +1,46 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Test Rust ${{ matrix.rust }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        rust: [stable, beta, nightly]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Setup Rust
+      if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
+      run: |
+        rustup toolchain add ${{ matrix.rust }}
+        rustup default ${{ matrix.rust }}
+
+    - name: Setup Rust
+      if: matrix.os == 'macos-latest'
+      run: curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain ${{ matrix.rust }}
+
+    - name: Build
+      if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
+      run: cargo build --all --verbose
+
+    - name: Build
+      if: matrix.os == 'macos-latest'
+      run: |
+        source $HOME/.cargo/env
+        cargo build --all --verbose
+
+    - name: Test
+      if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
+      run: cargo test --all --verbose
+
+    - name: Test
+      if: matrix.os == 'macos-latest'
+      run: |
+         source $HOME/.cargo/env
+         cargo test --all --verbose

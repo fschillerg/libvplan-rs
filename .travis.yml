@@ -1,47 +1,20 @@
 language: rust
 
 branches:
-  except:
-    - /^dependabot\/.*/
-
-rust:
-  - stable
-  - beta
-  - nightly
+  only:
+    - master
 
 cache: cargo
 
-jobs:
-  include:
-    - stage: lint
-      rust: stable
-      cache: cargo
-      install:
-        - rustup component add clippy
-      script:
-        - cargo clippy --all -- --deny clippy::all
+script:
+  - cargo doc --no-deps --release
 
-    - stage: format
-      rust: nightly
-      install:
-        - rustup component add rustfmt || cargo install --git https://github.com/rust-lang/rustfmt --force --bin rustfmt
-      script:
-        - cargo fmt --all -- --check
-
-    - stage: deploy docs
-      branches:
-        only:
-          - master
-      rust: stable
-      cache: cargo
-      script:
-        - cargo doc --no-deps --release
-      deploy:
-        provider: pages
-        local-dir: target/doc
-        skip-cleanup: true
-        github-token: $GITHUB_TOKEN
-        name: flyingB0tat0
-        email: bot@baudisch.xyz
-        keep-history: false
-        allow-empty-commit: true
+deploy:
+    provider: pages
+    local-dir: target/doc
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN
+    name: flyingB0tat0
+    email: bot@baudisch.xyz
+    keep-history: false
+    allow-empty-commit: true

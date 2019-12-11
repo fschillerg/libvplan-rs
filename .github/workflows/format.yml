@@ -1,0 +1,14 @@
+name: Format
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    
+    - name: Format
+      run: cargo fmt --all -- --check
